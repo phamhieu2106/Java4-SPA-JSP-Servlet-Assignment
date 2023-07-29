@@ -7,9 +7,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import repositories.CuaHangRepository;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.UUID;
 
 
 @WebServlet(
@@ -17,16 +18,10 @@ import java.util.ArrayList;
 )
 public class CuaHangServlet extends HttpServlet {
 
-    private ArrayList<CuaHang> cuaHangList;
+    private CuaHangRepository repository;
 
     public CuaHangServlet() {
-        this.cuaHangList = new ArrayList<>();
-        CuaHang cuaHang = new CuaHang(1, "1", "1", "1", "1", "1");
-        CuaHang cuaHang1 = new CuaHang(2, "1", "1", "1", "1", "1");
-        CuaHang cuaHang2 = new CuaHang(3, "1", "1", "1", "1", "1");
-        this.cuaHangList.add(cuaHang);
-        this.cuaHangList.add(cuaHang1);
-        this.cuaHangList.add(cuaHang2);
+        this.repository = new CuaHangRepository();
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -60,24 +55,7 @@ public class CuaHangServlet extends HttpServlet {
     public void search(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         String maSearch = request.getParameter("maSearch");
-        ArrayList<CuaHang> newList = new ArrayList<>();
-        for (CuaHang ch : cuaHangList
-        ) {
-            if (ch.getMa().equalsIgnoreCase(maSearch)) {
-                newList.add(ch);
-            }
-        }
-        if (newList.isEmpty()) {
-            response
-                    .sendRedirect("/Java4_Demo_war_exploded/cua-hang/index");
-        } else {
-            request
-                    .setAttribute("cuaHangList", newList);
 
-            request
-                    .getRequestDispatcher("/views/cuahang/index.jsp")
-                    .forward(request, response);
-        }
     }
 
     public void create(HttpServletRequest request, HttpServletResponse response)
@@ -95,8 +73,8 @@ public class CuaHangServlet extends HttpServlet {
         String thanhPho = request.getParameter("thanhPho");
         String quocGia = request.getParameter("quocGia");
 
-        CuaHang cuaHang = new CuaHang(1, ma, ten, diaChi, thanhPho, quocGia);
-        cuaHangList.add(cuaHang);
+        CuaHang cuaHang = new CuaHang(null, ma, ten, diaChi, thanhPho, quocGia);
+        repository.insert(cuaHang);
 
         response
                 .sendRedirect("/Java4_Demo_war_exploded/cua-hang/index");
@@ -104,8 +82,9 @@ public class CuaHangServlet extends HttpServlet {
 
     public void index(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        request
-                .setAttribute("cuaHangList", cuaHangList);
+
+//        request
+//                .setAttribute("cuaHangList", this.repository.getAll());
         request
                 .getRequestDispatcher("/views/cuahang/index.jsp")
                 .forward(request, response);
@@ -113,17 +92,9 @@ public class CuaHangServlet extends HttpServlet {
 
     public void remove(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        System.out.println(id);
-
-        for (CuaHang ch : cuaHangList
-        ) {
-            if (ch.getId() == id) {
-                cuaHangList.remove(ch);
-                break;
-            }
-        }
-
+        UUID id = UUID.fromString(request.getParameter("id"));
+        CuaHang ch = repository.getById(id);
+        repository.delete(ch);
         response
                 .sendRedirect("/Java4_Demo_war_exploded/cua-hang/index");
     }
@@ -131,16 +102,7 @@ public class CuaHangServlet extends HttpServlet {
     public void edit(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         int id = Integer.parseInt(request.getParameter("id"));
-        CuaHang newCuaHang;
-        for (CuaHang ch : cuaHangList
-        ) {
-            if (ch.getId() == id) {
-                newCuaHang = ch;
-                request
-                        .setAttribute("data", newCuaHang);
-                break;
-            }
-        }
+
         request
                 .getRequestDispatcher("/views/cuahang/edit.jsp")
                 .forward(request, response);
@@ -155,14 +117,9 @@ public class CuaHangServlet extends HttpServlet {
         String thanhPho = request.getParameter("thanhPho");
         String quocGia = request.getParameter("quocGia");
 
-        CuaHang cuaHang = new CuaHang(id, ma, ten, diaChi, thanhPho, quocGia);
+        CuaHang cuaHang = new CuaHang(null, ma, ten, diaChi, thanhPho, quocGia);
+        this.repository.update(cuaHang);
 
-        for (int i = 0; i < cuaHangList.size(); i++) {
-            if (cuaHangList.get(i).getId() == id) {
-                cuaHangList.set(i, cuaHang);
-                break;
-            }
-        }
 
         response
                 .sendRedirect("/Java4_Demo_war_exploded/cua-hang/index");

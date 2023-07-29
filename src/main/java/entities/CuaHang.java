@@ -2,13 +2,15 @@ package entities;
 
 import jakarta.persistence.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "CuaHang")
 public class CuaHang {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "Id")
-    private int id;
+    private UUID id;
 
     @Column(name = "Ma")
     private String ma;
@@ -28,7 +30,7 @@ public class CuaHang {
     public CuaHang() {
     }
 
-    public CuaHang(int id, String ma, String ten, String diaChi, String thanhPho, String quocGia) {
+    public CuaHang(UUID id, String ma, String ten, String diaChi, String thanhPho, String quocGia) {
         this.id = id;
         this.ma = ma;
         this.ten = ten;
@@ -37,11 +39,11 @@ public class CuaHang {
         this.quocGia = quocGia;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

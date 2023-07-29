@@ -13,21 +13,31 @@ public class ChiTietSanPham {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "IdSP", referencedColumnName = "Id")
     private SanPham sanPham;
-    
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "IdNsx", referencedColumnName = "Id")
     private NhaSanXuat nhaSanXuat;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "IdMauSac", referencedColumnName = "Id")
     private MauSac mauSac;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "IdDongSP", referencedColumnName = "Id")
     private DongSanPham dongSanPham;
 
     @Column(name = "NamBH")
     private int namBH;
+
     @Column(name = "MoTa")
     private String moTa;
+
     @Column(name = "SoLuongTon")
     private int soLuongTon;
+
     @Column(name = "GiaNhap")
     private double giaNhap;
+
     @Column(name = "GiaBan")
     private double giaBan;
 

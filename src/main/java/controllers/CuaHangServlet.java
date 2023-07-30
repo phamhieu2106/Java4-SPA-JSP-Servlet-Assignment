@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import repositories.CuaHangRepository;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -55,7 +57,18 @@ public class CuaHangServlet extends HttpServlet {
     public void search(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         String maSearch = request.getParameter("maSearch");
-
+        List<CuaHang> newCuaHangList = new ArrayList<>();
+        for (CuaHang ch : repository.getAll()
+        ) {
+            if (ch.getMa().equalsIgnoreCase(maSearch)) {
+                newCuaHangList.add(ch);
+            }
+        }
+        request
+                .setAttribute("cuaHangList", newCuaHangList);
+        request
+                .getRequestDispatcher("/views/cuahang/index.jsp")
+                .forward(request, response);
     }
 
     public void create(HttpServletRequest request, HttpServletResponse response)
@@ -83,8 +96,8 @@ public class CuaHangServlet extends HttpServlet {
     public void index(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-//        request
-//                .setAttribute("cuaHangList", this.repository.getAll());
+        request
+                .setAttribute("cuaHangList", this.repository.getAll());
         request
                 .getRequestDispatcher("/views/cuahang/index.jsp")
                 .forward(request, response);
@@ -101,8 +114,10 @@ public class CuaHangServlet extends HttpServlet {
 
     public void edit(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id"));
-
+        UUID id = UUID.fromString(request.getParameter("id"));
+        CuaHang ch = repository.getById(id);
+        request
+                .setAttribute("data", ch);
         request
                 .getRequestDispatcher("/views/cuahang/edit.jsp")
                 .forward(request, response);
@@ -110,14 +125,14 @@ public class CuaHangServlet extends HttpServlet {
 
     public void update(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id"));
+        UUID id = UUID.fromString(request.getParameter("id"));
         String ten = request.getParameter("ten");
         String ma = request.getParameter("ma");
         String diaChi = request.getParameter("diaChi");
         String thanhPho = request.getParameter("thanhPho");
         String quocGia = request.getParameter("quocGia");
 
-        CuaHang cuaHang = new CuaHang(null, ma, ten, diaChi, thanhPho, quocGia);
+        CuaHang cuaHang = new CuaHang(id, ma, ten, diaChi, thanhPho, quocGia);
         this.repository.update(cuaHang);
 
 

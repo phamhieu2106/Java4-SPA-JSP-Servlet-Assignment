@@ -20,7 +20,19 @@ public class CuaHangRepository {
     }
 
     public CuaHang getById(UUID id) {
-        return this.hSession.find(CuaHang.class, id);
+        String hql = "SELECT obj FROM CuaHang obj WHERE obj.id = ?1";
+        TypedQuery<CuaHang> query = this.hSession.createQuery(hql);
+        query.setParameter(1, id);
+        CuaHang ch = query.getSingleResult();
+        return ch;
+    }
+
+    public CuaHang getByMa(String ma) {
+        String hql = "SELECT obj FROM CuaHang obj WHERE obj.ma = ?1";
+        TypedQuery<CuaHang> query = this.hSession.createQuery(hql);
+        query.setParameter(1, ma);
+        CuaHang ch = query.getSingleResult();
+        return ch;
     }
 
     public List<CuaHang> getAll() {

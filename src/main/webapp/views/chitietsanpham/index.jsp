@@ -93,10 +93,10 @@
     <c:forEach var="chiTietSP" items="${chiTietSanPhamList}">
         <tr>
             <th scope="row">${chiTietSP.id}</th>
-            <td>${chiTietSP.idSP}</td>
-            <td>${chiTietSP.idNSX}</td>
-            <td>${chiTietSP.idMauSac}</td>
-            <td>${chiTietSP.idDongSP}</td>
+            <td>${chiTietSP.sanPham.ma}</td>
+            <td>${chiTietSP.nhaSanXuat.ma}</td>
+            <td>${chiTietSP.mauSac.ma}</td>
+            <td>${chiTietSP.dongSanPham.ma}</td>
             <td>${chiTietSP.namBH}</td>
             <td>${chiTietSP.soLuongTon}</td>
             <td>${chiTietSP.giaNhap}</td>

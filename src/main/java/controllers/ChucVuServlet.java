@@ -7,22 +7,23 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import repositories.ChucVuRepository;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @WebServlet(
         {"/chuc-vu/index", "/chuc-vu/create", "/chuc-vu/search", "/chuc-vu/store", "/chuc-vu/edit", "/chuc-vu/update", "/chuc-vu/delete"}
 )
 public class ChucVuServlet extends HttpServlet {
     private ArrayList<ChucVu> chucVuList;
+    private ChucVuRepository repository;
 
     public ChucVuServlet() {
         this.chucVuList = new ArrayList();
-
-        chucVuList.add(new ChucVu(1, "1", "1"));
-        chucVuList.add(new ChucVu(2, "2", "2"));
-        chucVuList.add(new ChucVu(3, "3", "3"));
+        repository = new ChucVuRepository();
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -66,8 +67,8 @@ public class ChucVuServlet extends HttpServlet {
             throws IOException, ServletException {
         String ten = request.getParameter("ten");
         String ma = request.getParameter("ma");
-        ChucVu cv = new ChucVu(1, ma, ten);
-        chucVuList.add(cv);
+        ChucVu cv = new ChucVu(null, ma, ten);
+        repository.insert(cv);
         response
                 .sendRedirect("/Java4_Demo_war_exploded/chuc-vu/index");
     }
@@ -75,31 +76,26 @@ public class ChucVuServlet extends HttpServlet {
     public void search(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         String maSearch = request.getParameter("maSearch");
-        ArrayList<ChucVu> newList = new ArrayList<>();
-        for (ChucVu ch : chucVuList
+        List<ChucVu> newChucVuList = new ArrayList<>();
+        for (ChucVu cv : repository.getAll()
         ) {
-            if (ch.getMa().equalsIgnoreCase(maSearch)) {
-                newList.add(ch);
+            if (cv.getMa().equalsIgnoreCase(maSearch)) {
+                newChucVuList.add(cv);
             }
         }
-        if (newList.isEmpty()) {
-            response
-                    .sendRedirect("/Java4_Demo_war_exploded/chuc-vu/index");
-        } else {
-            request
-                    .setAttribute("chucVuList", newList);
-
-            request
-                    .getRequestDispatcher("/views/chucvu/index.jsp")
-                    .forward(request, response);
-        }
+        request
+                .setAttribute("chucVuList", newChucVuList);
+        //return jsp file
+        request
+                .getRequestDispatcher("/views/chucvu/index.jsp")
+                .forward(request, response);
     }
 
     public void index(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         //set list to chucVuList jsp
         request
-                .setAttribute("chucVuList", chucVuList);
+                .setAttribute("chucVuList", repository.getAll());
         //return jsp file
         request
                 .getRequestDispatcher("/views/chucvu/index.jsp")
@@ -108,16 +104,10 @@ public class ChucVuServlet extends HttpServlet {
 
     public void edit(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        ChucVu chucvu;
-        for (int i = 0; i < chucVuList.size(); i++) {
-            if (chucVuList.get(i).getId() == id) {
-                chucvu = chucVuList.get(i);
-                request
-                        .setAttribute("data", chucvu);
-                break;
-            }
-        }
+        UUID id = UUID.fromString(request.getParameter("id"));
+        ChucVu cv = repository.getById(id);
+        request
+                .setAttribute("data", cv);
         request
                 .getRequestDispatcher("/views/chucvu/edit.jsp")
                 .forward(request, response);
@@ -125,31 +115,20 @@ public class ChucVuServlet extends HttpServlet {
 
     public void update(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id"));
+        UUID id = UUID.fromString(request.getParameter("id"));
         String ten = request.getParameter("ten");
         String ma = request.getParameter("ma");
         ChucVu cv = new ChucVu(id, ma, ten);
-
-        for (int i = 0; i < chucVuList.size(); i++) {
-            if (chucVuList.get(i).getId() == id) {
-                chucVuList.set(i, cv);
-                break;
-            }
-        }
+        repository.update(cv);
         response
                 .sendRedirect("/Java4_Demo_war_exploded/chuc-vu/index");
     }
 
     public void remove(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        for (ChucVu cv : chucVuList
-        ) {
-            if (cv.getId() == id) {
-                chucVuList.remove(cv);
-                break;
-            }
-        }
+        UUID id = UUID.fromString(request.getParameter("id"));
+        ChucVu cv = repository.getById(id);
+        repository.delete(cv);
         response
                 .sendRedirect("/Java4_Demo_war_exploded/chuc-vu/index");
     }

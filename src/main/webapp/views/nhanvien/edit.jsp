@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Thêm Nhân Viên</title>
+    <title>Cập Nhật Nhân Viên</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -66,7 +66,7 @@
         </div>
     </nav>
 </header>
-<h1 class="text-center">Thêm Nhân Viên</h1>
+<h1 class="text-center">Cập Nhật Nhân Viên</h1>
 <form method="post" action="/Java4_Demo_war_exploded/nhan-vien/update?id=${data.id}">
     <div class="mb-3">
         <label for="exampleInputMa" class="form-label">Mã:</label>
@@ -87,8 +87,8 @@
     <div class="mb-3">
         <label class="form-label">Giới Tính:</label>
         <select class="form-select" aria-label="Default select example" name="gioiTinh">
-            <option ${data.trangThai.equals("Nữ") ? "selected" : ""} value="Nữ">Nữ</option>
-            <option ${data.trangThai.equals("Nam") ? "selected" : ""} value="Nam">Nam</option>
+            <option ${data.trangThai.equals("true") ? "selected" : ""} value="Nữ">Nữ</option>
+            <option ${data.trangThai.equals("false") ? "selected" : ""} value="Nam">Nam</option>
         </select>
     </div>
     <div class="mb-3">
@@ -109,6 +109,25 @@
         <input type="password" class="form-control" id="exampleInputPassword" required name="matKhau"
                value="${data.matKhau}">
     </div>
+
+    <%--    <div class="mb-3">--%>
+    <%--        <label class="form-label">Cửa Hàng:</label>--%>
+    <%--        <select class="form-select" aria-label="Default select example" required name="cuaHang">--%>
+    <%--            <c:forEach var="cuaHang" items="${cuaHangList}">--%>
+    <%--                <option value="${cuaHang.id}">${cuaHang.ten}</option>--%>
+    <%--            </c:forEach>--%>
+    <%--        </select>--%>
+    <%--    </div>--%>
+
+    <%--    <div class="mb-3">--%>
+    <%--        <label class="form-label">Chức Vụ:</label>--%>
+    <%--        <select class="form-select" aria-label="Default select example" required name="chucVu">--%>
+    <%--            <c:forEach var="chucVu" items="${chucVuList}">--%>
+    <%--                <option value="${chucVu.id}">${chucVu.ten}</option>--%>
+    <%--            </c:forEach>--%>
+    <%--        </select>--%>
+    <%--    </div>--%>
+
     <div class="mb-3">
         <label class="form-label">Trạng Thái:</label>
         <select class="form-select" aria-label="Default select example" name="trangThai">

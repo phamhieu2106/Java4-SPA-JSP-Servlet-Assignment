@@ -1,56 +1,46 @@
 package repositories;
 
-import entities.KhachHang;
+import entities.ChiTietSanPham;
 import jakarta.persistence.TypedQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import utilites.HibernateUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class KhachHangRepository {
-
+public class ChiTietSanPhamRepository {
     private Session hSession;
-    private List<KhachHang> khachHangList;
+    private List<ChiTietSanPham> chiTietSanPhamList;
 
-    public KhachHangRepository() {
-        this.hSession = HibernateUtil.getFACTORY().openSession();
-        khachHangList = new ArrayList<>();
+    public ChiTietSanPhamRepository() {
+        this.hSession = new HibernateUtil().getFACTORY().openSession();
     }
 
-    public KhachHang getById(UUID id) {
-        String hql = "SELECT obj FROM KhachHang obj WHERE obj.id = ?1";
-        TypedQuery<KhachHang> query = this.hSession.createQuery(hql);
+    public ChiTietSanPham getById(UUID id) {
+        String hql = "SELECT obj FROM ChiTietSanPham obj WHERE obj.id = ?1";
+        TypedQuery<ChiTietSanPham> query = this.hSession.createQuery(hql);
         query.setParameter(1, id);
-        KhachHang ch = query.getSingleResult();
+        ChiTietSanPham ch = query.getSingleResult();
         return ch;
     }
 
-    public KhachHang getByMa(String ma) {
-        String hql = "SELECT obj FROM KhachHang obj WHERE obj.ma = ?1";
-        TypedQuery<KhachHang> query = this.hSession.createQuery(hql);
-        query.setParameter(1, ma);
-        KhachHang ch = query.getSingleResult();
-        return ch;
-    }
 
-    public List<KhachHang> getAll() {
+    public List<ChiTietSanPham> getAll() {
         Transaction transaction = this.hSession.getTransaction();
         try {
             transaction.begin();
-            TypedQuery<KhachHang> query = this.hSession.createQuery("SELECT ch from KhachHang ch", KhachHang.class);
-            khachHangList = query.getResultList();
+            TypedQuery<ChiTietSanPham> query = this.hSession.createQuery("SELECT ch from ChiTietSanPham ch", ChiTietSanPham.class);
+            chiTietSanPhamList = query.getResultList();
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
             transaction.rollback();
         }
-        return khachHangList;
+        return chiTietSanPhamList;
     }
 
-    public void insert(KhachHang ch) {
+    public void insert(ChiTietSanPham ch) {
         Transaction transaction = this.hSession.getTransaction();
         try {
             transaction.begin();
@@ -62,7 +52,7 @@ public class KhachHangRepository {
         }
     }
 
-    public void update(KhachHang ch) {
+    public void update(ChiTietSanPham ch) {
         Transaction transaction = this.hSession.getTransaction();
         try {
             transaction.begin();
@@ -74,7 +64,7 @@ public class KhachHangRepository {
         }
     }
 
-    public void delete(KhachHang ch) {
+    public void delete(ChiTietSanPham ch) {
         Transaction transaction = this.hSession.getTransaction();
         try {
             transaction.begin();

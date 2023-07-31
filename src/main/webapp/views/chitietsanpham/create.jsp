@@ -72,46 +72,34 @@
 
     <div class="mb-3">
         <label class="form-label">Sản Phẩm:</label>
-        <select class="form-select" aria-label="Default select example" required name="idSanPham">
-            <option selected value="1">Sản Phẩm 1</option>
-            <option value="2">Sản Phẩm 2</option>
-
-            <%--            <c:forEach var="tenSanPham" items="listTenSanPham">--%>
-            <%--                <option value="${tenSanPham.ten}">${tenSanPham.ten}</option>--%>
-            <%--            </c:forEach>--%>
+        <select class="form-select" aria-label="Default select example" required name="sanPham">
+            <c:forEach var="sp" items="${listSanPham}">
+                <option value="${sp.id}">${sp.ten}</option>
+            </c:forEach>
         </select>
     </div>
     <div class="mb-3">
         <label class="form-label">Nhà Sản Xuất:</label>
-        <select class="form-select" aria-label="Default select example" required name="idNhaSanXuat">
-            <option selected value="1">Nhà Sản Xuất 1</option>
-            <option value="2">Nhà Sản Xuất 2</option>
-
-            <%--            <c:forEach var="tenSanPham" items="listTenSanPham">--%>
-            <%--                <option value="${tenSanPham.ten}">${tenSanPham.ten}</option>--%>
-            <%--            </c:forEach>--%>
+        <select class="form-select" aria-label="Default select example" required name="nhaSanXuat">
+            <c:forEach var="nsx" items="${listNhaSanXuat}">
+                <option value="${nsx.id}">${nsx.ten}</option>
+            </c:forEach>
         </select>
     </div>
     <div class="mb-3">
         <label class="form-label">Màu Sắc:</label>
-        <select class="form-select" aria-label="Default select example" required name="idMauSac">
-            <option selected value="1">Màu Sắc 1</option>
-            <option value="2">Màu Sắc 2</option>
-
-            <%--            <c:forEach var="tenSanPham" items="listTenSanPham">--%>
-            <%--                <option value="${tenSanPham.ten}">${tenSanPham.ten}</option>--%>
-            <%--            </c:forEach>--%>
+        <select class="form-select" aria-label="Default select example" required name="mauSac">
+            <c:forEach var="ms" items="${listMauSac}">
+                <option value="${ms.id}">${ms.ten}</option>
+            </c:forEach>
         </select>
     </div>
     <div class="mb-3">
         <label class="form-label">Dòng Sản Phẩm:</label>
-        <select class="form-select" aria-label="Default select example" required name="idDongSanPham">
-            <option selected value="1">Dòng Sản Phẩm 1</option>
-            <option value="2">Dòng Sản Phẩm 2</option>
-
-            <%--            <c:forEach var="tenSanPham" items="listTenSanPham">--%>
-            <%--                <option value="${tenSanPham.ten}">${tenSanPham.ten}</option>--%>
-            <%--            </c:forEach>--%>
+        <select class="form-select" aria-label="Default select example" required name="dongSanPham">
+            <c:forEach var="dsp" items="${listDongSanPham}">
+                <option value="${dsp.id}">${dsp.ten}</option>
+            </c:forEach>
         </select>
     </div>
 

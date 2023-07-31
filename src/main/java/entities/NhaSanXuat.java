@@ -1,14 +1,24 @@
 package entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.util.UUID;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "NSX")
 public class NhaSanXuat {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "Id")
-    private int id;
+    private UUID id;
 
     @Column(name = "Ma")
     private String ma;
@@ -16,36 +26,5 @@ public class NhaSanXuat {
     @Column(name = "Ten")
     private String ten;
 
-    public NhaSanXuat() {
-    }
 
-    public NhaSanXuat(int id, String ma, String ten) {
-        this.id = id;
-        this.ma = ma;
-        this.ten = ten;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getMa() {
-        return ma;
-    }
-
-    public void setMa(String ma) {
-        this.ma = ma;
-    }
-
-    public String getTen() {
-        return ten;
-    }
-
-    public void setTen(String ten) {
-        this.ten = ten;
-    }
 }

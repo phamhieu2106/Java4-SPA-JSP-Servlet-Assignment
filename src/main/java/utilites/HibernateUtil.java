@@ -26,6 +26,7 @@ public class HibernateUtil {
         properties.put(Environment.PASS, "1");
         properties.put(Environment.SHOW_SQL, "true");
         conf.setProperties(properties);
+
         conf.addAnnotatedClass(CuaHang.class);
         conf.addAnnotatedClass(ChucVu.class);
         conf.addAnnotatedClass(DongSanPham.class);
@@ -34,7 +35,8 @@ public class HibernateUtil {
         conf.addAnnotatedClass(NhanVien.class);
         conf.addAnnotatedClass(NhaSanXuat.class);
         conf.addAnnotatedClass(SanPham.class);
-
+        conf.addAnnotatedClass(ChiTietSanPham.class);
+        
         ServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .applySettings(conf.getProperties()).build();
         FACTORY = conf.buildSessionFactory(registry);

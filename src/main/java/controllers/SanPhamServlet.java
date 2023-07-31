@@ -7,9 +7,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import repositories.SanPhamRepository;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 @WebServlet(
         {"/san-pham/index", "/san-pham/search", "/san-pham/create", "/san-pham/store", "/san-pham/edit", "/san-pham/update", "/san-pham/delete"}
@@ -17,13 +19,12 @@ import java.util.ArrayList;
 public class SanPhamServlet extends HttpServlet {
 
     private ArrayList<SanPham> sanPhamList;
+    private SanPhamRepository repository;
 
     public SanPhamServlet() {
         this.sanPhamList = new ArrayList();
+        repository = new SanPhamRepository();
 
-        sanPhamList.add(new SanPham(1, "1", "1"));
-        sanPhamList.add(new SanPham(2, "2", "2"));
-        sanPhamList.add(new SanPham(3, "3", "3"));
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -90,8 +91,8 @@ public class SanPhamServlet extends HttpServlet {
             throws IOException, ServletException {
         String ten = request.getParameter("ten");
         String ma = request.getParameter("ma");
-        SanPham sp = new SanPham(1, ma, ten);
-        sanPhamList.add(sp);
+        SanPham sp = new SanPham(null, ma, ten);
+        repository.insert(sp);
         response
                 .sendRedirect("/Java4_Demo_war_exploded/san-pham/index");
     }
@@ -100,7 +101,7 @@ public class SanPhamServlet extends HttpServlet {
             throws IOException, ServletException {
         //set list to chucVuList jsp
         request
-                .setAttribute("sanPhamList", sanPhamList);
+                .setAttribute("sanPhamList", repository.getAll());
         //return jsp file
         request
                 .getRequestDispatcher("/views/sanpham/index.jsp")
@@ -109,16 +110,9 @@ public class SanPhamServlet extends HttpServlet {
 
     public void edit(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        SanPham sanPham;
-        for (int i = 0; i < sanPhamList.size(); i++) {
-            if (sanPhamList.get(i).getId() == id) {
-                sanPham = sanPhamList.get(i);
-                request
-                        .setAttribute("data", sanPham);
-                break;
-            }
-        }
+        UUID id = UUID.fromString(request.getParameter("id"));
+        request
+                .setAttribute("data", repository.getById(id));
         request
                 .getRequestDispatcher("/views/sanpham/edit.jsp")
                 .forward(request, response);
@@ -126,31 +120,19 @@ public class SanPhamServlet extends HttpServlet {
 
     public void update(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id"));
+        UUID id = UUID.fromString(request.getParameter("id"));
         String ten = request.getParameter("ten");
         String ma = request.getParameter("ma");
         SanPham sp = new SanPham(id, ma, ten);
-
-        for (int i = 0; i < sanPhamList.size(); i++) {
-            if (sanPhamList.get(i).getId() == id) {
-                sanPhamList.set(i, sp);
-                break;
-            }
-        }
+        repository.update(sp);
         response
                 .sendRedirect("/Java4_Demo_war_exploded/san-pham/index");
     }
 
     public void remove(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        for (SanPham sp : sanPhamList
-        ) {
-            if (sp.getId() == id) {
-                sanPhamList.remove(sp);
-                break;
-            }
-        }
+        UUID id = UUID.fromString(request.getParameter("id"));
+        repository.delete(repository.getById(id));
         response
                 .sendRedirect("/Java4_Demo_war_exploded/san-pham/index");
     }

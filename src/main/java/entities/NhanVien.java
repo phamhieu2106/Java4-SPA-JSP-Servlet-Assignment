@@ -3,6 +3,9 @@ package entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,7 +17,7 @@ public class NhanVien {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "Id")
-    private int id;
+    private UUID id;
     @Column(name = "Ma")
     private String ma;
     @Column(name = "Ten")
@@ -24,7 +27,7 @@ public class NhanVien {
     @Column(name = "Ho")
     private String ho;
     @Column(name = "GioiTinh")
-    private String gioiTinh;
+    private boolean gioiTinh;
     @Column(name = "NgaySinh")
     private String ngaySinh;
     @Column(name = "DiaChi")
@@ -33,8 +36,6 @@ public class NhanVien {
     private String sdt;
     @Column(name = "MatKhau")
     private String matKhau;
-
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "IdCH", referencedColumnName = "Id")
     private CuaHang cuaHang;
@@ -44,6 +45,6 @@ public class NhanVien {
     private ChucVu chucVu;
 
     @Column(name = "TrangThai")
-    private int trangThai;
+    private boolean trangThai;
 
 }

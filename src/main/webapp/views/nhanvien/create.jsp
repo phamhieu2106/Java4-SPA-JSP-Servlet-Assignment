@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: virus
@@ -87,7 +88,7 @@
     <div class="mb-3">
         <label class="form-label">Giới Tính:</label>
         <select class="form-select" aria-label="Default select example" required name="gioiTinh">
-            <option selected value="Nu">Nữ</option>
+            <option selected value="Nữ">Nữ</option>
             <option value="Nam">Nam</option>
         </select>
     </div>
@@ -107,11 +108,29 @@
         <label for="exampleInputPassword" class="form-label">Mật Khẩu:</label>
         <input type="password" class="form-control" id="exampleInputPassword" required name="matKhau">
     </div>
+
+    <div class="mb-3">
+        <label class="form-label">Cửa Hàng:</label>
+        <select class="form-select" aria-label="Default select example" required name="cuaHang">
+            <c:forEach var="cuaHang" items="${listCuaHang}">
+                <option value="${cuaHang.id}">${cuaHang.ten}</option>
+            </c:forEach>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Chức Vụ:</label>
+        <select class="form-select" aria-label="Default select example" required name="chucVu">
+            <c:forEach var="chucVu" items="${listChucVu}">
+                <option value="${chucVu.id}">${chucVu.ten}</option>
+            </c:forEach>
+        </select>
+    </div>
+
     <div class="mb-3">
         <label class="form-label">Trạng Thái:</label>
         <select class="form-select" aria-label="Default select example" required name="trangThai">
-            <option selected value="Hoat Dong">Hoạt Động</option>
-            <option value="Nghi Viec">Nghỉ Việc</option>
+            <option selected value="Hoạt Động">Hoạt Động</option>
+            <option disabled value="Nghỉ Việc">Nghỉ Việc</option>
         </select>
     </div>
     <div class="text-center">

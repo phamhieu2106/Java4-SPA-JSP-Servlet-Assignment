@@ -115,6 +115,8 @@
         <th scope="col">Địa Chỉ</th>
         <th scope="col">Số Điện Thoại</th>
         <th scope="col">Mật Khẩu</th>
+        <th scope="col">Cửa Hàng</th>
+        <th scope="col">Chức Vụ</th>
         <th scope="col">Trạng Thái</th>
         <th scope="col" colspan="2">Functions</th>
     </tr>
@@ -128,12 +130,14 @@
             <td>${nhanVien.ten}</td>
             <td>${nhanVien.tenDem}</td>
             <td>${nhanVien.ho}</td>
-            <td>${nhanVien.gioiTinh}</td>
+            <td>${nhanVien.gioiTinh == false ? "Nữ" : "Nam"}</td>
             <td>${nhanVien.ngaySinh}</td>
             <td>${nhanVien.diaChi}</td>
             <td>${nhanVien.sdt}</td>
             <td>${nhanVien.matKhau}</td>
-            <td>${nhanVien.trangThai}</td>
+            <td>${nhanVien.cuaHang.ma}</td>
+            <td>${nhanVien.chucVu.ma}</td>
+            <td>${nhanVien.trangThai == true ? "Hoạt Động" : "Nghỉ Việc"}</td>
             <td>
                 <a href="/Java4_Demo_war_exploded/nhan-vien/edit?id=${nhanVien.id}">
                     <button class="btn btn-primary">Update</button>

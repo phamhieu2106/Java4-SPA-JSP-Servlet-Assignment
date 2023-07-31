@@ -7,19 +7,22 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import repositories.MauSacRepository;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 @WebServlet(
         {"/mau-sac/index", "/mau-sac/create", "/mau-sac/store", "/mau-sac/edit", "/mau-sac/update", "/mau-sac/delete"}
 )
 public class MauSacServlet extends HttpServlet {
     private ArrayList<MauSac> mauSacList;
+    private MauSacRepository repository;
 
     public MauSacServlet() {
         this.mauSacList = new ArrayList<>();
-        mauSacList.add(new MauSac(5, "5", "5"));
+        repository = new MauSacRepository();
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -60,7 +63,7 @@ public class MauSacServlet extends HttpServlet {
 
         String ten = request.getParameter("ten");
         String ma = request.getParameter("ma");
-        mauSacList.add(new MauSac(1, ma, ten));
+        repository.insert(new MauSac(null, ma, ten));
 
         response
                 .sendRedirect("/Java4_Demo_war_exploded/mau-sac/index");
@@ -69,7 +72,7 @@ public class MauSacServlet extends HttpServlet {
     public void index(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         request
-                .setAttribute("mauSacList", mauSacList);
+                .setAttribute("mauSacList", repository.getAll());
         request
                 .getRequestDispatcher("/views/mausac/index.jsp")
                 .forward(request, response);
@@ -77,16 +80,9 @@ public class MauSacServlet extends HttpServlet {
 
     public void remove(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        System.out.println(id);
+        UUID id = UUID.fromString(request.getParameter("id"));
 
-        for (MauSac ms : mauSacList
-        ) {
-            if (ms.getId() == id) {
-                mauSacList.remove(ms);
-                break;
-            }
-        }
+        repository.delete(repository.getById(id));
 
         response
                 .sendRedirect("/Java4_Demo_war_exploded/mau-sac/index");
@@ -94,17 +90,9 @@ public class MauSacServlet extends HttpServlet {
 
     public void edit(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        MauSac newMauSac;
-        for (MauSac mauSac : mauSacList
-        ) {
-            if (mauSac.getId() == id) {
-                newMauSac = mauSac;
-                request
-                        .setAttribute("data", newMauSac);
-                break;
-            }
-        }
+        UUID id = UUID.fromString(request.getParameter("id"));
+        request
+                .setAttribute("data", repository.getById(id));
         request
                 .getRequestDispatcher("/views/mausac/edit.jsp")
                 .forward(request, response);
@@ -112,15 +100,10 @@ public class MauSacServlet extends HttpServlet {
 
     public void update(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id"));
+        UUID id = UUID.fromString(request.getParameter("id"));
         String ten = request.getParameter("ten");
         String ma = request.getParameter("ma");
-        for (int i = 0; i < mauSacList.size(); i++) {
-            if (mauSacList.get(i).getId() == id) {
-                mauSacList.set(i, new MauSac(id, ma, ten));
-                break;
-            }
-        }
+        repository.update(new MauSac(id, ten, ma));
         response
                 .sendRedirect("/Java4_Demo_war_exploded/mau-sac/index");
     }

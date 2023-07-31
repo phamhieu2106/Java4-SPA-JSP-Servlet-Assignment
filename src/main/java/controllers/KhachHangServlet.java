@@ -7,10 +7,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import repositories.KhachHangRepository;
 
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 
 @WebServlet(
@@ -18,10 +20,12 @@ import java.util.ArrayList;
 )
 public class KhachHangServlet extends HttpServlet {
 
+    private KhachHangRepository repository;
     private ArrayList<KhachHang> khachHangList;
 
     public KhachHangServlet() {
         this.khachHangList = new ArrayList<>();
+        repository = new KhachHangRepository();
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -73,7 +77,7 @@ public class KhachHangServlet extends HttpServlet {
         String quocGia = request.getParameter("quocGia");
         String matKhau = request.getParameter("matKhau");
 
-        khachHangList.add(new KhachHang(1, ten, ma, tenDem, ho, ngaySinh, sdt, diaChi, thanhPho, quocGia, matKhau));
+        repository.insert(new KhachHang(null, ten, ma, tenDem, ho, ngaySinh, sdt, diaChi, thanhPho, quocGia, matKhau));
         response
                 .sendRedirect("/Java4_Demo_war_exploded/khach-hang/index");
 
@@ -83,7 +87,7 @@ public class KhachHangServlet extends HttpServlet {
             throws IOException, ServletException {
         //set khach hang list
         request
-                .setAttribute("khachHangList", khachHangList);
+                .setAttribute("khachHangList", repository.getAll());
 
         request
                 .getRequestDispatcher("/views/khachhang/index.jsp")
@@ -92,34 +96,17 @@ public class KhachHangServlet extends HttpServlet {
 
     public void remove(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        System.out.println(id);
-
-        for (KhachHang kh : khachHangList
-        ) {
-            if (kh.getId() == id) {
-                khachHangList.remove(kh);
-                break;
-            }
-        }
-
+        UUID id = UUID.fromString(request.getParameter("id"));
+        repository.delete(repository.getById(id));
         response
                 .sendRedirect("/Java4_Demo_war_exploded/khach-hang/index");
     }
 
     public void edit(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        KhachHang newKhachHang;
-        for (KhachHang kh : khachHangList
-        ) {
-            if (kh.getId() == id) {
-                newKhachHang = kh;
-                request
-                        .setAttribute("data", newKhachHang);
-                break;
-            }
-        }
+        UUID id = UUID.fromString(request.getParameter("id"));
+        request
+                .setAttribute("data", repository.getById(id));
         request
                 .getRequestDispatcher("/views/khachhang/edit.jsp")
                 .forward(request, response);
@@ -127,7 +114,7 @@ public class KhachHangServlet extends HttpServlet {
 
     public void update(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id"));
+        UUID id = UUID.fromString(request.getParameter("id"));
         String ten = request.getParameter("ten");
         String ma = request.getParameter("ma");
         String tenDem = request.getParameter("tenDem");
@@ -139,13 +126,7 @@ public class KhachHangServlet extends HttpServlet {
         String quocGia = request.getParameter("quocGia");
         String matKhau = request.getParameter("matKhau");
 
-
-        for (int i = 0; i < khachHangList.size(); i++) {
-            if (khachHangList.get(i).getId() == id) {
-                khachHangList.set(i, new KhachHang(id, ma, ten, tenDem, ho, ngaySinh, sdt, diaChi, thanhPho, quocGia, matKhau));
-                break;
-            }
-        }
+        repository.update(new KhachHang(id, ma, ten, tenDem, ho, ngaySinh, sdt, diaChi, thanhPho, quocGia, matKhau));
 
         response
                 .sendRedirect("/Java4_Demo_war_exploded/khach-hang/index");

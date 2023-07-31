@@ -6,23 +6,22 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import repositories.DongSanPhamRepository;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 @WebServlet(
         {"/dong-san-pham/index", "/dong-san-pham/create", "/dong-san-pham/store", "/dong-san-pham/edit", "/dong-san-pham/update", "/dong-san-pham/delete"}
 )
 public class DongSanPhamServlet extends HttpServlet {
 
-    private ArrayList<DongSanPham> dongSanPhamList;
+    private DongSanPhamRepository repository;
 
     public DongSanPhamServlet() {
-        this.dongSanPhamList = new ArrayList();
 
-        dongSanPhamList.add(new DongSanPham(1, "1", "1"));
-        dongSanPhamList.add(new DongSanPham(2, "2", "2"));
-        dongSanPhamList.add(new DongSanPham(3, "3", "3"));
+        this.repository = new DongSanPhamRepository();
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -64,8 +63,8 @@ public class DongSanPhamServlet extends HttpServlet {
             throws IOException, ServletException {
         String ten = request.getParameter("ten");
         String ma = request.getParameter("ma");
-        DongSanPham sp = new DongSanPham(1, ma, ten);
-        dongSanPhamList.add(sp);
+        DongSanPham sp = new DongSanPham(null, ma, ten);
+        repository.insert(sp);
         response
                 .sendRedirect("/Java4_Demo_war_exploded/dong-san-pham/index");
     }
@@ -74,7 +73,7 @@ public class DongSanPhamServlet extends HttpServlet {
             throws IOException, ServletException {
         //set list to chucVuList jsp
         request
-                .setAttribute("dongSanPhamList", dongSanPhamList);
+                .setAttribute("dongSanPhamList", repository.getAll());
         //return jsp file
         request
                 .getRequestDispatcher("/views/dongsanpham/index.jsp")
@@ -83,16 +82,10 @@ public class DongSanPhamServlet extends HttpServlet {
 
     public void edit(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        DongSanPham sanPham;
-        for (int i = 0; i < dongSanPhamList.size(); i++) {
-            if (dongSanPhamList.get(i).getId() == id) {
-                sanPham = dongSanPhamList.get(i);
-                request
-                        .setAttribute("data", sanPham);
-                break;
-            }
-        }
+        UUID id = UUID.fromString(request.getParameter("id"));
+        DongSanPham cv = repository.getById(id);
+        request
+                .setAttribute("data", cv);
         request
                 .getRequestDispatcher("/views/dongsanpham/edit.jsp")
                 .forward(request, response);
@@ -100,31 +93,20 @@ public class DongSanPhamServlet extends HttpServlet {
 
     public void update(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id"));
+        UUID id = UUID.fromString(request.getParameter("id"));
         String ten = request.getParameter("ten");
         String ma = request.getParameter("ma");
         DongSanPham sp = new DongSanPham(id, ma, ten);
-
-        for (int i = 0; i < dongSanPhamList.size(); i++) {
-            if (dongSanPhamList.get(i).getId() == id) {
-                dongSanPhamList.set(i, sp);
-                break;
-            }
-        }
+        repository.update(sp);
         response
                 .sendRedirect("/Java4_Demo_war_exploded/dong-san-pham/index");
     }
 
     public void remove(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        for (DongSanPham sp : dongSanPhamList
-        ) {
-            if (sp.getId() == id) {
-                dongSanPhamList.remove(sp);
-                break;
-            }
-        }
+        UUID id = UUID.fromString(request.getParameter("id"));
+        DongSanPham sp = repository.getById(id);
+        repository.delete(sp);
         response
                 .sendRedirect("/Java4_Demo_war_exploded/dong-san-pham/index");
     }

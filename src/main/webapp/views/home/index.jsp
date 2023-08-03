@@ -71,18 +71,17 @@
         </nav>
     </header>
     <div class="main">
-        <h3 class="text-end">Hi! ${email}</h3>
         <h1 class="text-center">Trang Chủ</h1>
         <div class="text-end">
             <a href="/Java4_Demo_war_exploded/home/cart">
-                <i class="fa-solid fa-cart-shopping fa-2xl"></i>
+                Giỏ Hàng:<i class="fa-solid fa-cart-shopping fa-2xl"></i>
             </a>
         </div>
         <h2>Danh Sách Sản Phẩm</h2>
-        <div class="col col-md-12 d-flex">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
             <c:forEach var="ctsp" items="${sanPhamChiTietList}">
-                <div class="col-md-4">
-                    <div class="card" style="width: 18rem;">
+                <div class="col">
+                    <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">${ctsp.sanPham.ten}</h5>
                             <p class="card-text">${ctsp.giaBan}VNĐ</p>

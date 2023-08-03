@@ -2,6 +2,7 @@ package controllers;
 
 import entities.ChucVu;
 import entities.CuaHang;
+import entities.GioHang;
 import entities.NhanVien;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import repositories.ChucVuRepository;
 import repositories.CuaHangRepository;
+import repositories.GioHangRepository;
 import repositories.NhanVienRepository;
 
 import java.io.IOException;
@@ -28,12 +30,14 @@ public class NhanVienServlet extends HttpServlet {
     private NhanVienRepository repository;
     private ChucVuRepository chucVuRepository;
     private CuaHangRepository cuaHangRepository;
+    private GioHangRepository gioHangRepository;
 
     public NhanVienServlet() {
         this.nhanVienList = new ArrayList<>();
         this.repository = new NhanVienRepository();
         this.chucVuRepository = new ChucVuRepository();
         this.cuaHangRepository = new CuaHangRepository();
+        this.gioHangRepository = new GioHangRepository();
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -153,7 +157,13 @@ public class NhanVienServlet extends HttpServlet {
         UUID chucVu = UUID.fromString(request.getParameter("chucVu"));
         ChucVu cv = chucVuRepository.getById(chucVu);
 
-        repository.insert(new NhanVien(null, ma, ten, tenDem, ho, gioiTinh, ngaySinh, diaChi, sdt, matKhau, ch, cv, trangThaiStatus));
+        NhanVien nv = new NhanVien(null, ma, ten, tenDem, ho, gioiTinh, ngaySinh, diaChi, sdt, matKhau, ch, cv, trangThaiStatus);
+
+        repository.insert(nv);
+
+        GioHang gioHang = new GioHang(null, null, nv, null, null, null, nv.getTen(), nv.getDiaChi(), 0);
+        gioHangRepository.add(gioHang);
+
         response
                 .sendRedirect("/Java4_Demo_war_exploded/nhan-vien/index");
     }

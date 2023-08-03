@@ -118,6 +118,14 @@ public class ChiTietSanPhamServlet extends HttpServlet {
         request
                 .setAttribute("data", repository.getById(id));
         request
+                .setAttribute("listSanPham", sanPhamRepository.getAll());
+        request
+                .setAttribute("listNhaSanXuat", nhaSanXuatRepository.getAll());
+        request
+                .setAttribute("listMauSac", mauSacRepository.getAll());
+        request
+                .setAttribute("listDongSanPham", dongSanPhamRepository.getAll());
+        request
                 .getRequestDispatcher("/views/chitietsanpham/edit.jsp")
                 .forward(request, response);
     }

@@ -36,6 +36,7 @@ public class NhanVien {
     private String sdt;
     @Column(name = "MatKhau")
     private String matKhau;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "IdCH", referencedColumnName = "Id")
     private CuaHang cuaHang;
@@ -47,4 +48,23 @@ public class NhanVien {
     @Column(name = "TrangThai")
     private boolean trangThai;
 
+
+    @OneToOne(mappedBy = "nhanVien", fetch = FetchType.LAZY)
+    private GioHang gioHang;
+
+    public NhanVien(UUID id, String ma, String ten, String tenDem, String ho, boolean gioiTinh, String ngaySinh, String diaChi, String sdt, String matKhau, CuaHang cuaHang, ChucVu chucVu, boolean trangThai) {
+        this.id = id;
+        this.ma = ma;
+        this.ten = ten;
+        this.tenDem = tenDem;
+        this.ho = ho;
+        this.gioiTinh = gioiTinh;
+        this.ngaySinh = ngaySinh;
+        this.diaChi = diaChi;
+        this.sdt = sdt;
+        this.matKhau = matKhau;
+        this.cuaHang = cuaHang;
+        this.chucVu = chucVu;
+        this.trangThai = trangThai;
+    }
 }

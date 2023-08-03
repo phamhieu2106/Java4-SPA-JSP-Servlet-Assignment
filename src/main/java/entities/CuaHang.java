@@ -1,9 +1,18 @@
 package entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "CuaHang")
 public class CuaHang {
@@ -27,8 +36,8 @@ public class CuaHang {
     @Column(name = "QuocGia")
     private String quocGia;
 
-    public CuaHang() {
-    }
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "cuaHang")
+    private List<NhanVien> nhanVienList;
 
     public CuaHang(UUID id, String ma, String ten, String diaChi, String thanhPho, String quocGia) {
         this.id = id;
@@ -37,65 +46,5 @@ public class CuaHang {
         this.diaChi = diaChi;
         this.thanhPho = thanhPho;
         this.quocGia = quocGia;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getMa() {
-        return ma;
-    }
-
-    public void setMa(String ma) {
-        this.ma = ma;
-    }
-
-    public String getTen() {
-        return ten;
-    }
-
-    public void setTen(String ten) {
-        this.ten = ten;
-    }
-
-    public String getDiaChi() {
-        return diaChi;
-    }
-
-    public void setDiaChi(String diaChi) {
-        this.diaChi = diaChi;
-    }
-
-    public String getThanhPho() {
-        return thanhPho;
-    }
-
-    public void setThanhPho(String thanhPho) {
-        this.thanhPho = thanhPho;
-    }
-
-    public String getQuocGia() {
-        return quocGia;
-    }
-
-    public void setQuocGia(String quocGia) {
-        this.quocGia = quocGia;
-    }
-
-    @Override
-    public String toString() {
-        return "CuaHang{" +
-                "id=" + id +
-                ", ma='" + ma + '\'' +
-                ", ten='" + ten + '\'' +
-                ", diaChi='" + diaChi + '\'' +
-                ", thanhPho='" + thanhPho + '\'' +
-                ", quocGia='" + quocGia + '\'' +
-                '}';
     }
 }

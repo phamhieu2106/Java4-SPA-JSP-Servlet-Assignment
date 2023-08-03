@@ -83,14 +83,14 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="sanPham" items="${listSanPham}">
+        <c:forEach var="gioHangChiTiet" items="${listSanPham}">
             <tr>
-                <th scope="row">${sanPham.id}</th>
-                <td>${sanPham.maSanPham}</td>
-                <td>${sanPham.tenSanPham}</td>
-                <td>${sanPham.gia}VNĐ</td>
-                <td>${sanPham.namBaoHanh}</td>
-                <td>${sanPham.soLuong}</td>
+                <th scope="row">${gioHangChiTiet.id}</th>
+                <td>${gioHangChiTiet.chiTietSanPham.sanPham.ma}</td>
+                <td>${gioHangChiTiet.chiTietSanPham.sanPham.ten}</td>
+                <td>${gioHangChiTiet.chiTietSanPham.giaBan}VNĐ</td>
+                <td>${gioHangChiTiet.chiTietSanPham.namBH}</td>
+                <td>${gioHangChiTiet.chiTietSanPham.soLuongTon}</td>
                 <td>
                     <a href="/Java4_Demo_war_exploded/home/delete?id=${sanPham.id}">
                         <button class="btn btn-danger">Remove</button>

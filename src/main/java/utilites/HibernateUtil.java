@@ -36,7 +36,10 @@ public class HibernateUtil {
         conf.addAnnotatedClass(NhaSanXuat.class);
         conf.addAnnotatedClass(SanPham.class);
         conf.addAnnotatedClass(ChiTietSanPham.class);
-        
+
+        conf.addAnnotatedClass(GioHang.class);
+        conf.addAnnotatedClass(GioHangChiTiet.class);
+
         ServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .applySettings(conf.getProperties()).build();
         FACTORY = conf.buildSessionFactory(registry);

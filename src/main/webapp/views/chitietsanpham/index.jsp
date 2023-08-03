@@ -77,10 +77,10 @@
     <thead>
     <tr>
         <th scope="col">#</th>
-        <th scope="col">ID Sản Phẩm</th>
-        <th scope="col">ID Nhà Sản Xuất</th>
-        <th scope="col">ID Màu Sắc</th>
-        <th scope="col">ID Dòng Sản Phẩm</th>
+        <th scope="col">Mã Sản Phẩm</th>
+        <th scope="col">Mã Nhà Sản Xuất</th>
+        <th scope="col">Mã Màu Sắc</th>
+        <th scope="col">Mã Dòng Sản Phẩm</th>
         <th scope="col">Năm Bảo Hành</th>
         <th scope="col">Số Lượng Tồn</th>
         <th scope="col">Giá Nhập</th>

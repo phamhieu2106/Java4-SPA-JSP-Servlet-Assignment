@@ -1,12 +1,15 @@
 package controllers;
 
 
+import entities.GioHang;
 import entities.KhachHang;
+import entities.NhanVien;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import repositories.GioHangRepository;
 import repositories.KhachHangRepository;
 
 import java.io.IOException;
@@ -22,10 +25,12 @@ public class KhachHangServlet extends HttpServlet {
 
     private KhachHangRepository repository;
     private ArrayList<KhachHang> khachHangList;
+    private GioHangRepository gioHangRepository;
 
     public KhachHangServlet() {
         this.khachHangList = new ArrayList<>();
         repository = new KhachHangRepository();
+        gioHangRepository = new GioHangRepository();
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -77,7 +82,12 @@ public class KhachHangServlet extends HttpServlet {
         String quocGia = request.getParameter("quocGia");
         String matKhau = request.getParameter("matKhau");
 
-        repository.insert(new KhachHang(null, ten, ma, tenDem, ho, ngaySinh, sdt, diaChi, thanhPho, quocGia, matKhau));
+
+        KhachHang kh = new KhachHang(null, ma, ten, tenDem, ho, ngaySinh, sdt, diaChi, thanhPho, quocGia, matKhau);
+        repository.insert(kh);
+        GioHang gioHang = new GioHang(null, kh, null, kh.getMa(), null, null, kh.getTen(), kh.getDiaChi(), 0);
+        gioHangRepository.add(gioHang);
+
         response
                 .sendRedirect("/Java4_Demo_war_exploded/khach-hang/index");
 

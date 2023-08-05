@@ -8,6 +8,7 @@ import utilites.HibernateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class GioHangChiTietRepository {
     private Session hSession = HibernateUtil.getFACTORY().openSession();
@@ -61,5 +62,21 @@ public class GioHangChiTietRepository {
             e.printStackTrace();
             transaction.rollback();
         }
+    }
+
+    public List<GioHangChiTiet> findById(UUID gioHangID, UUID ctspID) {
+        TypedQuery<GioHangChiTiet> query = this.hSession.createQuery(
+                "SELECT ch FROM GioHangChiTiet ch WHERE ch.gioHangChiTietED.ctspId = ?1 " +
+                        "and ch.gioHangChiTietED.gioHangId = ?2", GioHangChiTiet.class);
+        query.setParameter(1, ctspID);
+        query.setParameter(2, gioHangID);
+        return query.getResultList();
+    }
+
+    public GioHangChiTiet findOneById(UUID ctspID) {
+        TypedQuery<GioHangChiTiet> query = this.hSession.createQuery(
+                "SELECT ch FROM GioHangChiTiet ch WHERE ch.gioHangChiTietED.ctspId = ?1", GioHangChiTiet.class);
+        query.setParameter(1, ctspID);
+        return query.getSingleResult();
     }
 }

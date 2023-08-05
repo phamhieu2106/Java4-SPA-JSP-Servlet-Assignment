@@ -36,7 +36,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Dropdown
+                                Quản Lý
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="/Java4_Demo_war_exploded/chuc-vu/index">Quản Lý Chức
@@ -84,6 +84,8 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">${ctsp.sanPham.ten}</h5>
+                            <p class="card-text">${ctsp.mauSac.ten}</p>
+                            <p class="card-text">${ctsp.dongSanPham.ten}</p>
                             <p class="card-text">${ctsp.giaBan}VNĐ</p>
                             <a href="/Java4_Demo_war_exploded/home/add?id=${ctsp.id}" class="btn btn-primary">Thêm vào
                                 giỏ

@@ -3,8 +3,6 @@ package entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -51,19 +49,5 @@ public class ChiTietSanPham {
     @Column(name = "GiaBan")
     private double giaBan;
 
-    @OneToMany(mappedBy = "GioHangChiTietED.chiTietSanPham", cascade = CascadeType.ALL, orphanRemoval = true)
-    Set<GioHangChiTiet> gioHangChiTiets = new HashSet<>();
 
-    public ChiTietSanPham(UUID id, SanPham sanPham, NhaSanXuat nhaSanXuat, MauSac mauSac, DongSanPham dongSanPham, int namBH, String moTa, int soLuongTon, double giaNhap, double giaBan) {
-        this.id = id;
-        this.sanPham = sanPham;
-        this.nhaSanXuat = nhaSanXuat;
-        this.mauSac = mauSac;
-        this.dongSanPham = dongSanPham;
-        this.namBH = namBH;
-        this.moTa = moTa;
-        this.soLuongTon = soLuongTon;
-        this.giaNhap = giaNhap;
-        this.giaBan = giaBan;
-    }
 }

@@ -1,10 +1,7 @@
 package entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -14,6 +11,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@ToString
 @Table(name = "GioHangChiTiet")
 public class GioHangChiTiet implements Serializable {
 
@@ -22,7 +20,7 @@ public class GioHangChiTiet implements Serializable {
             @AttributeOverride(name = "ctspId", column = @Column(name = "IdChiTietSP"))
     })
     @EmbeddedId
-    private GioHangChiTietED ghctId;
+    private GioHangChiTietED gioHangChiTietED;
 
 
     @Column(name = "SoLuong")

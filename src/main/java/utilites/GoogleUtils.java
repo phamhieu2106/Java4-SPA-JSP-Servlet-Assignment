@@ -1,5 +1,7 @@
-package accessgoogle;
+package utilites;
 
+import accessgoogle.Constants;
+import accessgoogle.GooglePojo;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.apache.http.client.ClientProtocolException;

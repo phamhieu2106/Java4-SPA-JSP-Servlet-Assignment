@@ -43,18 +43,5 @@ public class GioHang {
     @Column(name = "TinhTrang")
     private int tinhTrang;
 
-    @OneToMany(mappedBy = "GioHangChiTietED.gioHang", cascade = CascadeType.ALL, orphanRemoval = true)
-    Set<GioHangChiTiet> gioHangChiTiets = new HashSet<>();
-
-    public GioHang(UUID id, KhachHang khachHang, NhanVien nhanVien, String ma, Date ngayTao, Date ngayThanhToan, String tenNguoiNhan, String diaChi, int tinhTrang) {
-        this.id = id;
-        this.khachHang = khachHang;
-        this.nhanVien = nhanVien;
-        this.ma = ma;
-        this.ngayTao = ngayTao;
-        this.ngayThanhToan = ngayThanhToan;
-        this.tenNguoiNhan = tenNguoiNhan;
-        this.diaChi = diaChi;
-        this.tinhTrang = tinhTrang;
-    }
+    
 }

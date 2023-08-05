@@ -1,6 +1,6 @@
 package entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,13 +11,13 @@ import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Embeddable
 @Getter
 @Setter
-public class GioHangChiTietED implements Serializable {
+@Embeddable
+public class HoaDonChiTietED implements Serializable {
 
-    private UUID gioHangId;
+    private UUID idHoaDon;
 
-    private UUID ctspId;
+    private UUID idChiTietSP;
 
 }

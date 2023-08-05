@@ -98,8 +98,8 @@
         <label class="form-label">Dòng Sản Phẩm:</label>
         <select class="form-select" aria-label="Default select example" required name="dongSanPham">
             <c:forEach var="dsp" items="${listDongSanPham}">
-                <option value="${dsp.id}">${dsp.ten}</option>
-            </c:forEach>
+                <option value="${dsp.iddsp.ten}</option>
+            </c:forEach>}">${
         </select>
     </div>
 

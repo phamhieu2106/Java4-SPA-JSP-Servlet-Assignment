@@ -36,7 +36,7 @@ public class CuaHang {
     @Column(name = "QuocGia")
     private String quocGia;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "cuaHang")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cuaHang")
     private List<NhanVien> nhanVienList;
 
     public CuaHang(UUID id, String ma, String ten, String diaChi, String thanhPho, String quocGia) {

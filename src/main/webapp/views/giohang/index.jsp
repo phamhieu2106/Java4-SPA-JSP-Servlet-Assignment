@@ -35,7 +35,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Dropdown
+                                Quản Lý
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="/Java4_Demo_war_exploded/chuc-vu/index">Quản Lý Chức
@@ -77,22 +77,20 @@
             <th scope="col">Mã SP</th>
             <th scope="col">Tên SP</th>
             <th scope="col">Giá</th>
-            <th scope="col">Năm Bảo Hành</th>
             <th scope="col">Số Lượng</th>
             <th scope="col">Functions</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="gioHangChiTiet" items="${listSanPham}">
+        <c:forEach var="sanPham" items="${listSanPham}" varStatus="g">
             <tr>
-                <th scope="row">${gioHangChiTiet.id}</th>
-                <td>${gioHangChiTiet.chiTietSanPham.sanPham.ma}</td>
-                <td>${gioHangChiTiet.chiTietSanPham.sanPham.ten}</td>
-                <td>${gioHangChiTiet.chiTietSanPham.giaBan}VNĐ</td>
-                <td>${gioHangChiTiet.chiTietSanPham.namBH}</td>
-                <td>${gioHangChiTiet.chiTietSanPham.soLuongTon}</td>
+                <th scope="row">${g.index + 1}</th>
+                <td>${sanPham.maSP}</td>
+                <td>${sanPham.tenSP}</td>
+                <td>${sanPham.gia}VNĐ</td>
+                <td>${sanPham.soLuong}</td>
                 <td>
-                    <a href="/Java4_Demo_war_exploded/home/delete?id=${sanPham.id}">
+                    <a href="/Java4_Demo_war_exploded/home/delete?id=${sanPham.ctspID}">
                         <button class="btn btn-danger">Remove</button>
                     </a>
                 </td>
@@ -100,7 +98,6 @@
         </c:forEach>
         <tr>
             <th scope="row">Tổng</th>
-            <td></td>
             <td></td>
             <td></td>
             <td></td>

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -51,6 +52,10 @@ public class NhanVien {
 
     @OneToOne(mappedBy = "nhanVien", fetch = FetchType.LAZY)
     private GioHang gioHang;
+
+
+    @OneToMany(mappedBy = "nhanVien", fetch = FetchType.LAZY)
+    private List<HoaDon> hoaDonList;
 
     public NhanVien(UUID id, String ma, String ten, String tenDem, String ho, boolean gioiTinh, String ngaySinh, String diaChi, String sdt, String matKhau, CuaHang cuaHang, ChucVu chucVu, boolean trangThai) {
         this.id = id;

@@ -54,7 +54,8 @@
                 <hr style="border: 2px solid black;">
             </div>
             <div class="text-center" style="margin-top: 90px;">
-                <a><u class="text-info">View in browser</u></a>
+                <a href="http://localhost:8080/Java4_Demo_war_exploded/home/index"><u class="text-info">View in
+                    browser</u></a>
                 <p>Rất Hân Hạnh Được Phục Vụ Bạn!. </p>
             </div>
         </div>

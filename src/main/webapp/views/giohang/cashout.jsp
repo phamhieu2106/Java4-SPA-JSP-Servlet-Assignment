@@ -70,11 +70,11 @@
 <form method="get" action="/Java4_Demo_war_exploded/home/invoice">
     <div class="mb-3">
         <label for="exampleInputMa" class="form-label">Tên Khách Hàng:</label>
-        <input type="text" class="form-control" id="exampleInputMa" required name="name">
+        <input type="text" class="form-control" id="exampleInputMa" required name="ten" value="${name}">
     </div>
     <div class="mb-3">
         <label for="exampleInputDiaChi" class="form-label">Địa Chỉ:</label>
-        <input type="text" class="form-control" id="exampleInputDiaChi" required name="diaChi">
+        <input type="text" class="form-control" id="exampleInputDiaChi" required name="diaChi" value="${diaChi}">
     </div>
     <div class="mb-3">
         <label for="exampleInputTong" class="form-label">Tổng Tiền:</label>

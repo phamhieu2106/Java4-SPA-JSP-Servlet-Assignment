@@ -1,17 +1,16 @@
 package entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 @Entity
 @Table(name = "KhachHang")
 public class KhachHang {
@@ -41,6 +40,9 @@ public class KhachHang {
 
     @OneToOne(mappedBy = "khachHang", fetch = FetchType.EAGER)
     private GioHang gioHang;
+
+    @OneToMany(mappedBy = "khachHang", fetch = FetchType.EAGER)
+    private List<HoaDon> hoaDon;
 
     public KhachHang(UUID id, String ma, String ten, String tenDem, String ho, String ngaySinh, String sdt, String diaChi, String thanhPho, String quocGia, String matKhau) {
         this.id = id;

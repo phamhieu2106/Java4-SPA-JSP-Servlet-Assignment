@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import utilites.GoogleUtils;
 
 import java.io.IOException;
 
@@ -31,8 +32,11 @@ public class LoginGoogleServlet extends HttpServlet {
 
             request.setAttribute("email", googlePojo.getEmail());
 
-            response
-                    .sendRedirect("http://localhost:8080/Java4_Demo_war_exploded/home/index");
+            request
+                    .getRequestDispatcher("/views/home/index.jsp")
+                    .forward(request, response);
+
+            response.sendRedirect("http://localhost:8080/Java4_Demo_war_exploded/home/index");
         }
     }
 
